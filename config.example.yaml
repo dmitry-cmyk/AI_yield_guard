@@ -1,0 +1,94 @@
+# Yield Guardian Agent Configuration
+# Copy this file to config.yaml and fill in your values
+
+# ═══════════════════════════════════════════════════════════════════
+# WALLET CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════
+
+# Safe wallet address (holds your Aave position)
+# Create at https://app.safe.global on Base network
+safe_address: "0xYOUR_SAFE_ADDRESS"
+
+# Agent wallet (receives spending limit allowance)
+# Generate with: python create_agent_wallet.py
+agent_wallet_address: "0xYOUR_AGENT_ADDRESS"
+# IMPORTANT: Store private key in environment variable, NOT here!
+# export AGENT_PRIVATE_KEY="your_key_here"
+
+# Wirex Pay card wallet (where you spend from)
+# Find in Wirex app under Wirex Pay
+wirex_pay_address: "0xYOUR_WIREX_PAY_ADDRESS"
+
+# Legacy config (for backward compatibility)
+wallet_address: "0xYOUR_SAFE_ADDRESS"
+defi_wallet_address: "0xYOUR_SAFE_ADDRESS"
+
+
+# ═══════════════════════════════════════════════════════════════════
+# TELEGRAM BOT CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════
+
+telegram:
+  # Get from @BotFather on Telegram
+  bot_token: "YOUR_BOT_TOKEN"
+  
+  # Get from @userinfobot on Telegram
+  authorized_user_id: 0
+
+
+# ═══════════════════════════════════════════════════════════════════
+# PRINCIPAL & YIELD CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════
+
+# Your protected principal amount (in USD)
+principal_usd: 10000
+
+# Starting yield balance (usually 0 for new setups)
+initial_yield: 0
+
+# Spending mode determines what % of yield you can spend:
+#   conservative = 50% (save more)
+#   balanced = 80% (default)
+#   growth = 30% (reinvest more)
+spending_mode: "balanced"
+
+# Yield sources - auto-detected from Aave, but you can add manual ones
+yield_sources:
+  - name: "Aave V3 USDC"
+    type: "aave_v3"
+    principal_usd: 10000
+    apy_percent: 4.0  # Will be updated from on-chain data
+
+# Weekly spending limit (should match Safe spending limit)
+weekly_allowance_usd: 10
+
+
+# ═══════════════════════════════════════════════════════════════════
+# MONITORING CONFIGURATION
+# ═══════════════════════════════════════════════════════════════════
+
+# How often to check for transactions (seconds)
+poll_interval: 30
+
+# Local database for transaction history
+database_path: "data/transactions.db"
+
+# Log level: DEBUG, INFO, WARNING, ERROR
+log_level: "INFO"
+
+# Alert thresholds
+alerts:
+  # Warn when this % of budget is used
+  budget_warning_threshold: 80
+  
+  # Alert for transactions above this amount
+  large_transaction_threshold: 500
+
+
+# ═══════════════════════════════════════════════════════════════════
+# OPTIONAL: API KEYS
+# ═══════════════════════════════════════════════════════════════════
+
+# Basescan API key (optional, for better rate limits)
+# Get free at https://basescan.org/apis
+basescan_api_key: ""
